@@ -2,6 +2,7 @@ package br.com.senac.biblioteca.service;
 
 import br.com.senac.biblioteca.dto.CreateFuncionarioDto;
 import br.com.senac.biblioteca.dto.FuncionarioDto;
+import br.com.senac.biblioteca.dto.UpdateFuncionarioDto;
 import br.com.senac.biblioteca.enumeration.CodeEnum;
 import br.com.senac.biblioteca.enumeration.RoleEnum;
 import br.com.senac.biblioteca.exception.AlreadyRemovedException;
@@ -65,7 +66,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     }
 
     @Override
-    public FuncionarioDto update(long matricula, CreateFuncionarioDto funcionarioDto) {
+    public FuncionarioDto update(long matricula, UpdateFuncionarioDto funcionarioDto) {
         var funcionario = modelMapper.map(funcionarioDto, Funcionario.class);
 
         funcionario.setSenha(passwordEncoder.encode(funcionarioDto.getSenha()));

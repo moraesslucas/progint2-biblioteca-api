@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/lucas.moraes
-    username: lucas.moraes
-    password: lucas#
+    url: jdbc:postgresql://ec2-34-231-56-78.compute-1.amazonaws.com:5432/d3b64ru5ofqv13
+    username: dlumbwogdpcqpx
+    password: 76e8860fa4cd8c1f8ffa79fdfd8bcf76af75355536b944f209725ffdf4e466f1
     driver-class-name: org.postgresql.Driver
   security:
     user:

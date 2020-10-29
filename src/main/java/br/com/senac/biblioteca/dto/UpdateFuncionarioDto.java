@@ -4,12 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-public class CreateFuncionarioDto {
-
+public class UpdateFuncionarioDto {
     @NotBlank(message = "Nome não pode ser nulo")
     @Size(message = "Nome pode ter até 255 caracteres", max = 255)
     private String nome;
@@ -18,7 +18,6 @@ public class CreateFuncionarioDto {
     @Size(max = 50)
     private String telefone;
 
-    @NotBlank(message = "Senha não pode ser nula")
-    @Size(min = 6, max = 40, message = "Senha deve conter entre 6 e 40 caracteres")
+    @Pattern(regexp = "^(|.{6,40})$", message = "A senha deve conter entre 6 e 40 caracteres")
     private String senha;
 }

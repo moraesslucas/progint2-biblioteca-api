@@ -3,6 +3,7 @@ package br.com.senac.biblioteca.controller;
 import br.com.senac.biblioteca.dto.CreateFuncionarioDto;
 import br.com.senac.biblioteca.dto.ExceptionResponse;
 import br.com.senac.biblioteca.dto.FuncionarioDto;
+import br.com.senac.biblioteca.dto.UpdateFuncionarioDto;
 import br.com.senac.biblioteca.service.FuncionarioService;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
@@ -92,7 +93,7 @@ public class FuncionarioController {
             @ApiResponse(code = 200, message = "O cadastro do funcionario foi atualizado com sucesso"),
             @ApiResponse(code = 400, message = "Requisição inválida, valide os parâmetros de entrada", response = ExceptionResponse.class)
     })
-    public ResponseEntity<FuncionarioDto> updateFuncionario(@PathVariable("matricula") long matricula, @Valid @RequestBody CreateFuncionarioDto funcionarioDto) {
+    public ResponseEntity<FuncionarioDto> updateFuncionario(@PathVariable("matricula") long matricula, @Valid @RequestBody UpdateFuncionarioDto funcionarioDto) {
         var funcionario = funcionarioService.update(matricula, funcionarioDto);
 
         var uri = ServletUriComponentsBuilder

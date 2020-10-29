@@ -35,7 +35,7 @@ CREATE TABLE funcionario (
 	senha VARCHAR ( 120 ) NOT NULL
 );
 
-CREATE TABLE funcionario_Role (
+CREATE TABLE funcionario_role (
 	id_funcionario integer REFERENCES funcionario (matricula),
 	id_role integer REFERENCES roles (id)
 );
