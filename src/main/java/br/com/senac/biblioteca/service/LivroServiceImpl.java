@@ -33,7 +33,15 @@ public class LivroServiceImpl implements LivroService {
 
     @Override
     public Page<LivroDto> findAll(Pageable pageable, boolean disponiveis) {
-        return livroRepository.findAll(pageable).map(livro -> modelMapper.map(livro, LivroDto.class));
+        Page<Livro> livros;
+
+        if (disponiveis) {
+            livros = livroRepository.findAllDisponiveis(pageable);
+        } else {
+            livros = livroRepository.findAll(pageable);
+        }
+
+        return livros.map(livro -> modelMapper.map(livro, LivroDto.class));
     }
 
     @Override

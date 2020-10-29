@@ -31,8 +31,10 @@ public class ClienteController {
             @ApiResponse(code = 200, message = "A requisição foi processada com sucesso"),
             @ApiResponse(code = 400, message = "Requisição inválida, valide os parâmetros de entrada", response = ExceptionResponse.class)
     })
-    public ResponseEntity<Page<ClienteDto>> getClientes(Pageable pageable) {
-        return ResponseEntity.ok(clienteService.findAll(pageable));
+    public ResponseEntity<Page<ClienteDto>> getClientes(Pageable pageable,
+                                                        @RequestParam(value = "disponivel", required = false)
+                                                                boolean disponiveis) {
+        return ResponseEntity.ok(clienteService.findAll(pageable, disponiveis));
     }
 
     @GetMapping("/{matricula}")

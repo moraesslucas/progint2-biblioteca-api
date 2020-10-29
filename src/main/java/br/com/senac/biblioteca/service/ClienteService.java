@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 public interface ClienteService {
 
     ClienteDto findById(long matricula);
-    Page<ClienteDto> findAll(Pageable pageable);
+    Page<ClienteDto> findAll(Pageable pageable, boolean disponiveis);
     ClienteDto create(ClienteDto cliente);
     ClienteDto update(long matricula, ClienteDto cliente);
     void delete(long matricula);

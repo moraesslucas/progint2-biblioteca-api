@@ -39,4 +39,8 @@ public class Livro {
     @OneToMany(mappedBy = "livro")
     private List<Emprestimo> emprestimos;
 
+    public boolean isDisponivel() {
+        return emprestimos.isEmpty();
+    }
+
 }

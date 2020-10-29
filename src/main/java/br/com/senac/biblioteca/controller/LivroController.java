@@ -41,7 +41,7 @@ public class LivroController {
                             "Exemplo: ?sort=id,asc&sort=data,asc&sort=prop,desc")
     })
     public ResponseEntity<Page<LivroDto>> getLivros(Pageable pageable,
-                                                    @RequestParam(value = "disponiveis", required = false)
+                                                    @RequestParam(value = "disponivel", required = false)
                                                             boolean disponiveis) {
         return ResponseEntity.ok(livroService.findAll(pageable, disponiveis));
     }

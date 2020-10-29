@@ -32,8 +32,16 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public Page<ClienteDto> findAll(Pageable pageable) {
-        return clienteRepository.findAll(pageable).map(cliente -> modelMapper.map(cliente, ClienteDto.class));
+    public Page<ClienteDto> findAll(Pageable pageable, boolean disponiveis) {
+        Page<Cliente> clientes;
+
+        if (disponiveis) {
+            clientes = clienteRepository.findAllDisponiveis(pageable);
+        } else {
+            clientes = clienteRepository.findAll(pageable);
+        }
+
+        return clientes.map(cliente -> modelMapper.map(cliente, ClienteDto.class));
     }
 
     @Override
