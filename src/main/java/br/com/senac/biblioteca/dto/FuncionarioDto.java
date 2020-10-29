@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -17,7 +18,7 @@ public class FuncionarioDto {
     private String nome;
 
     @NotBlank
-    @Size(max = 50)
+    @Pattern(regexp = "\\(\\d{2,}\\) \\d{4,}-\\d{4}", message = "O campo telefone deve ter o formato (##) ####-#### ou (##) #####-####")
     private String telefone;
 
 }

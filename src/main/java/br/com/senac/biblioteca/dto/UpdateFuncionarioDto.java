@@ -15,7 +15,7 @@ public class UpdateFuncionarioDto {
     private String nome;
 
     @NotBlank(message = "Telefone não pode ser nulo")
-    @Size(max = 50)
+    @Pattern(regexp = "\\(\\d{2,}\\) \\d{4,}-\\d{4}", message = "O campo telefone deve ter o formato (##) ####-#### ou (##) #####-####")
     private String telefone;
 
     @Pattern(regexp = "^(|.{6,40})$", message = "A senha deve conter entre 6 e 40 caracteres")
