@@ -70,7 +70,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
         var funcionario = funcionarioRepository.findById(matricula)
                 .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado", CodeEnum.NOT_FOUND));
 
-        if (funcionario.getSenha() != null) {
+        if (funcionarioDto.getSenha() != null) {
             funcionario.setSenha(passwordEncoder.encode(funcionarioDto.getSenha()));
         }
 
