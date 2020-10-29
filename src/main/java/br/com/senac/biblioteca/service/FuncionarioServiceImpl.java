@@ -67,14 +67,15 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
     @Override
     public FuncionarioDto update(long matricula, UpdateFuncionarioDto funcionarioDto) {
-        var funcionario = modelMapper.map(funcionarioDto, Funcionario.class);
+        var funcionario = funcionarioRepository.findById(matricula)
+                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado", CodeEnum.NOT_FOUND));
 
-        funcionario.setSenha(passwordEncoder.encode(funcionarioDto.getSenha()));
-        funcionario.setRoles(
-                Set.of(roleRepository.findByNome(RoleEnum.ROLE_USER)
-                        .orElseThrow(() -> new InvalidRoleException("Problema ao setar permissões do usuário", CodeEnum.INVALID_ROLE)))
-        );
-        funcionario.setMatricula(matricula);
+        if (funcionario.getSenha() != null) {
+            funcionario.setSenha(passwordEncoder.encode(funcionarioDto.getSenha()));
+        }
+
+        funcionario.setNome(funcionarioDto.getNome());
+        funcionario.setTelefone(funcionarioDto.getTelefone());
 
         return modelMapper.map(funcionarioRepository.save(funcionario), FuncionarioDto.class);
     }
