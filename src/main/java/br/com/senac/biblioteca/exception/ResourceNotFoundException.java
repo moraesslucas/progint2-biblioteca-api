@@ -6,13 +6,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ResourceNotFoundException extends RuntimeException {
-
-    private String message;
-    private CodeEnum code;
+public class ResourceNotFoundException extends CodeMessageException {
 
     public ResourceNotFoundException(String message, CodeEnum code) {
-        this.message = message;
-        this.code = code;
+        super(message, code);
     }
+
 }

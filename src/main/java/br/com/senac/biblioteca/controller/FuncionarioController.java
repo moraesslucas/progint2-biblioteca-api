@@ -1,8 +1,9 @@
 package br.com.senac.biblioteca.controller;
 
+import br.com.senac.biblioteca.dto.CreateFuncionarioDto;
 import br.com.senac.biblioteca.dto.ExceptionResponse;
-import br.com.senac.biblioteca.dto.LivroDto;
-import br.com.senac.biblioteca.service.LivroService;
+import br.com.senac.biblioteca.dto.FuncionarioDto;
+import br.com.senac.biblioteca.service.FuncionarioService;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,16 +16,16 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/livro")
+@RequestMapping("/funcionario")
 @Validated
 @AllArgsConstructor
 @CrossOrigin(origins = "*")
-public class LivroController {
+public class FuncionarioController {
 
-    private final LivroService livroService;
+    private final FuncionarioService funcionarioService;
 
     @GetMapping
-    @ApiOperation("Realizar a busca dos livros existentes na biblioteca")
+    @ApiOperation("Realizar a busca dos funcionarios existentes na biblioteca")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "A requisição foi processada com sucesso"),
             @ApiResponse(code = 400, message = "Requisição inválida, valide os parâmetros de entrada", response = ExceptionResponse.class)
@@ -40,68 +41,66 @@ public class LivroController {
                             "Você pode enviar várias vezes o parâmetro sort para múltiplos campos." +
                             "Exemplo: ?sort=id,asc&sort=data,asc&sort=prop,desc")
     })
-    public ResponseEntity<Page<LivroDto>> getLivros(Pageable pageable,
-                                                    @RequestParam(value = "disponiveis", required = false)
-                                                            boolean disponiveis) {
-        return ResponseEntity.ok(livroService.findAll(pageable, disponiveis));
+    public ResponseEntity<Page<FuncionarioDto>> getFuncionarios(Pageable pageable) {
+        return ResponseEntity.ok(funcionarioService.findAll(pageable));
     }
 
-    @GetMapping("/{id}")
-    @ApiOperation("Realizar a busca de um livro por id")
+    @GetMapping("/{matricula}")
+    @ApiOperation("Realizar a busca de um funcionario por id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "O livro foi localizado com sucesso"),
+            @ApiResponse(code = 200, message = "O funcionario foi localizado com sucesso"),
             @ApiResponse(code = 400, message = "Requisição inválida, valide os parâmetros de entrada", response = ExceptionResponse.class),
-            @ApiResponse(code = 404, message = "Livro não encontrado, válide o id informado", response = ExceptionResponse.class)
+            @ApiResponse(code = 404, message = "Funcionario não encontrado, válide o id informado", response = ExceptionResponse.class)
     })
-    public ResponseEntity<LivroDto> getLivro(@PathVariable("id") long id) {
-        return ResponseEntity.ok(livroService.findById(id));
+    public ResponseEntity<FuncionarioDto> getFuncionario(@PathVariable("matricula") long matricula) {
+        return ResponseEntity.ok(funcionarioService.findById(matricula));
     }
 
-    @DeleteMapping("/{id}")
-    @ApiOperation("Remover um livro por id")
+    @DeleteMapping("/{matricula}")
+    @ApiOperation("Remover um funcionario por matrícula")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "A remoCão foi realizada com sucesso"),
+            @ApiResponse(code = 204, message = "A remoção foi realizada com sucesso"),
             @ApiResponse(code = 400, message = "Requisição inválida, valide os parâmetros de entrada", response = ExceptionResponse.class),
-            @ApiResponse(code = 404, message = "Livro não localizado", response = ExceptionResponse.class)
+            @ApiResponse(code = 404, message = "Funcionario não localizado", response = ExceptionResponse.class)
     })
-    public ResponseEntity<Void> deleteLivro(@PathVariable("id") long id) {
-        livroService.delete(id);
+    public ResponseEntity<Void> deleteFuncionario(@PathVariable("matricula") long matricula) {
+        funcionarioService.delete(matricula);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping
-    @ApiOperation("Realizar o cadastro de um livro")
+    @ApiOperation("Realizar o cadastro de um funcionario")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "O cadastro do livro foi criado com sucesso"),
+            @ApiResponse(code = 201, message = "O cadastro do funcionario foi criado com sucesso"),
             @ApiResponse(code = 400, message = "Requisição inválida, valide os parâmetros de entrada", response = ExceptionResponse.class)
     })
-    public ResponseEntity<LivroDto> createLivro(@Valid @RequestBody LivroDto livroDto) {
-        var livro = livroService.create(livroDto);
+    public ResponseEntity<FuncionarioDto> createFuncionario(@Valid @RequestBody CreateFuncionarioDto funcionarioDto) {
+        var funcionario = funcionarioService.create(funcionarioDto);
 
         var uri = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
-                .path("/livro/{id}")
-                .buildAndExpand(livro.getId())
+                .path("/funcionario/{matricula}")
+                .buildAndExpand(funcionario.getMatricula())
                 .toUri();
 
-        return ResponseEntity.created(uri).body(livro);
+        return ResponseEntity.created(uri).body(funcionario);
     }
 
-    @PutMapping("/{id}")
-    @ApiOperation("Realizar a atualização de um livro")
+    @PutMapping("/{matricula}")
+    @ApiOperation("Realizar a atualização de um funcionario")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "O cadastro do livro foi atualizado com sucesso"),
+            @ApiResponse(code = 200, message = "O cadastro do funcionario foi atualizado com sucesso"),
             @ApiResponse(code = 400, message = "Requisição inválida, valide os parâmetros de entrada", response = ExceptionResponse.class)
     })
-    public ResponseEntity<LivroDto> updateLivro(@PathVariable("id") long id, @Valid @RequestBody LivroDto livroDto) {
-        var livro = livroService.update(id, livroDto);
+    public ResponseEntity<FuncionarioDto> updateFuncionario(@PathVariable("matricula") long matricula, @Valid @RequestBody CreateFuncionarioDto funcionarioDto) {
+        var funcionario = funcionarioService.update(matricula, funcionarioDto);
 
         var uri = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
-                .path("/livro/{id}")
-                .buildAndExpand(id)
+                .path("/funcionario/{matricula}")
+                .buildAndExpand(matricula)
                 .toUri();
 
-        return ResponseEntity.created(uri).body(livro);
+        return ResponseEntity.created(uri).body(funcionario);
     }
 }

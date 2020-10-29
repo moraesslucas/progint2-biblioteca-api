@@ -14,10 +14,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/cliente")
 @Validated
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 public class ClienteController {
 
     private final ClienteService clienteService;
@@ -61,7 +64,7 @@ public class ClienteController {
             @ApiResponse(code = 201, message = "O cadastro do cliente foi criado com sucesso"),
             @ApiResponse(code = 400, message = "Requisição inválida, valide os parâmetros de entrada", response = ExceptionResponse.class)
     })
-    public ResponseEntity<ClienteDto> createCliente(@RequestBody ClienteDto clienteDto) {
+    public ResponseEntity<ClienteDto> createCliente(@Valid @RequestBody ClienteDto clienteDto) {
         var cliente = clienteService.create(clienteDto);
 
         var uri = ServletUriComponentsBuilder
@@ -79,7 +82,7 @@ public class ClienteController {
             @ApiResponse(code = 200, message = "O cadastro do cliente foi atualizado com sucesso"),
             @ApiResponse(code = 400, message = "Requisição inválida, valide os parâmetros de entrada", response = ExceptionResponse.class)
     })
-    public ResponseEntity<ClienteDto> updateCliente(@PathVariable("matricula") long matricula, @RequestBody ClienteDto clienteDto) {
+    public ResponseEntity<ClienteDto> updateCliente(@PathVariable("matricula") long matricula, @Valid @RequestBody ClienteDto clienteDto) {
         var cliente = clienteService.update(matricula, clienteDto);
 
         var uri = ServletUriComponentsBuilder

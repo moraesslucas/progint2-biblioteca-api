@@ -3,11 +3,10 @@ package br.com.senac.biblioteca.model;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "CLIENTE")
@@ -17,6 +16,8 @@ import javax.persistence.Table;
 public class Cliente {
 
     @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "MATRICULA")
     private long matricula;
 
@@ -28,5 +29,8 @@ public class Cliente {
 
     @Column(name = "TELEFONE")
     private String telefone;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Emprestimo> emprestimos;
 
 }
