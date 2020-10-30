@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LivroRepository extends PagingAndSortingRepository<Livro, Long> {
 
-    @Query(value = "SELECT l FROM Livro l LEFT JOIN l.emprestimos e WHERE e.id IS NULL")
+    @Query(value = "SELECT l FROM Livro l LEFT JOIN l.emprestimos e WHERE e.id IS NULL AND e.dataPrevistaEntrega IS NULL")
     Page<Livro> findAllDisponiveis(Pageable pageable);
 }

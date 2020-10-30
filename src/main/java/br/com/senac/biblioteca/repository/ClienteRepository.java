@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ClienteRepository extends PagingAndSortingRepository<Cliente, Long> {
 
-    @Query(value = "SELECT DISTINCT c FROM Cliente c LEFT JOIN c.emprestimos e WHERE e.size < 3")
+    @Query(value = "SELECT DISTINCT c FROM Cliente c LEFT JOIN c.emprestimos e WHERE e.dataEfetivaEntrega IS NULL AND e.size < 3")
     Page<Cliente> findAllDisponiveis(Pageable pageable);
 }
